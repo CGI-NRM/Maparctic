@@ -33,7 +33,7 @@ leaflet(locs) %>% addTiles() %>%
   addCircles(
     lng = ~Lon,
     lat = ~Lat,
-    radius = 3000,
+    radius = 6000,
     color = ~pal(Occupied),
     stroke = FALSE, fillOpacity = 0.5,
     popup = ~Name)
