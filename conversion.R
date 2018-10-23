@@ -26,8 +26,13 @@ locs <- degreToDec(location$Lat, location$Lon)
 locs$Occupied <- location$Occupied
 locs$Name <- location$Name
 
+# Prepare the text for the tooltip:
+mytext=paste("Lokal: ", location$Name, "<br/>", "Antal föryngringar: ", location$Ungar) %>%
+  lapply(htmltools::HTML)
+
+
 # Create a palette that maps factor levels to colors
-pal <- colorFactor(c("navy", "red"), domain = c("y", "n"))
+pal <- colorFactor(c("navy", "red"), domain = c("Ja", "Nej"))
 
 leaflet(locs) %>% addTiles() %>%
   addCircles(
@@ -36,4 +41,5 @@ leaflet(locs) %>% addTiles() %>%
     radius = 6000,
     color = ~pal(Occupied),
     stroke = FALSE, fillOpacity = 0.5,
-    popup = ~Name)
+    popup = ~mytext) %>%
+  addLegend( pal=pal, values=~Occupied, opacity=0.9, title = "Föryngring", position = "bottomright" )
